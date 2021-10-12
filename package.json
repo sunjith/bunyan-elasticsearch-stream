@@ -1,0 +1,51 @@
+{
+  "name": "bunyan-elasticsearch-stream",
+  "version": "1.0.0",
+  "description": "A Bunyan stream for sending logs to Elasticsearch or Elastic Cloud data stream",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "repository": "https://github.com/sunjith/bunyan-elasticsearch-stream.git",
+  "author": {
+    "name": "sunjith"
+  },
+  "license": "MIT",
+  "scripts": {
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "spell-check": "cspell 'src/**/*.ts'",
+    "pretest": "yarn lint && yarn spell-check && yarn build",
+    "test": "jest",
+    "test-only": "jest",
+    "coverage": "jest --coverage",
+    "build": "tsc",
+    "start": "ts-node server.ts"
+  },
+  "pre-commit": [
+    "lint",
+    "spell-check"
+  ],
+  "pre-push": [
+    "build"
+  ],
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "engineStrict": true,
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.15.0",
+    "bunyan": "^1.8.15"
+  },
+  "optionalDependencies": {},
+  "devDependencies": {
+    "@shelf/jest-elasticsearch": "^2.1.0",
+    "@types/bunyan": "^1.8.7",
+    "@types/jest": "^27.0.2",
+    "jest": "^27.2.4",
+    "pre-commit": "^1.2.2",
+    "pre-push": "^0.1.1",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.3"
+  }
+}
