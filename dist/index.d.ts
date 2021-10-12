@@ -5,8 +5,8 @@ export interface BunyanESStreamOptions {
     indexName?: string;
     limit?: number;
     interval?: number;
-    client?: Client;
     clientOptions?: ClientOptions;
+    client?: Client;
 }
 export default class BunyanESStream extends Writable {
     closed: boolean;

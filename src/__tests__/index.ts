@@ -9,8 +9,8 @@ describe("stream", () => {
     const logSubmitted = jest.fn();
 
     const esStream = new BunyanESStream({
-      indexName: "log",
-      limit: 2,
+      indexName: "test-log",
+      limit: 3,
       clientOptions: { node: "http://localhost:9200" },
     });
     esStream.on("log_received", logReceived);
