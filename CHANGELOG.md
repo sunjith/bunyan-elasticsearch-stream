@@ -1,8 +1,12 @@
 # Change Logs
 
+## 1.2.0
+
+- Fix message field for Kibana Observability
+
 ## 1.1.0
 
-- Fix timestamp field
+- Fix timestamp field for Elasticsearch Data Stream
 - Fix error handling
 - Fix elasticsearch test index
 
