@@ -6,7 +6,7 @@ module.exports = () => ({
   port: 9200,
   indexes: [
     {
-      name: "log",
+      name: "test-log",
       body: {
         settings: {
           number_of_shards: "1",

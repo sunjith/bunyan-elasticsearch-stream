@@ -53,6 +53,8 @@ export default class BunyanESStream extends Writable {
       const body = JSON.parse(chunk.toString());
 
       body.level = bunyan.nameFromLevel[body.level];
+      body["@timestamp"] = body.time;
+      delete body.time;
 
       const entry = {
         index: this.indexName,
@@ -132,8 +134,8 @@ export default class BunyanESStream extends Writable {
     this.client.bulk({ body }, (err, resp) => {
       if (resp && resp.body && resp.body.errors) {
         for (const item of resp.body.items) {
-          if (item && item.index && item.index.error) {
-            this.emit("error", item.index.error);
+          if (item && item.create && item.create.error) {
+            this.emit("error", item.create.error);
           }
         }
       } else if (err) {
