@@ -53,8 +53,9 @@ export default class BunyanESStream extends Writable {
       const body = JSON.parse(chunk.toString());
 
       body.level = bunyan.nameFromLevel[body.level];
-      body["@timestamp"] = Date.now();
+      body["@timestamp"] = body.time;
       body.message = body.msg;
+      delete body.time;
       delete body.msg;
 
       const entry = {
