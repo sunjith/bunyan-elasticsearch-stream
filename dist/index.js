@@ -97,6 +97,9 @@ class BunyanESStream extends stream_1.Writable {
     }
     _final(callback) {
         this.flush();
+        if (this.intervalId) {
+            clearTimeout(this.intervalId);
+        }
         if (callback) {
             callback();
         }
