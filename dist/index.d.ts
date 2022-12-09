@@ -1,4 +1,6 @@
 /// <reference types="node" />
+/// <reference types="node" />
+/// <reference types="node" />
 import { Writable } from "stream";
 import { Client, ClientOptions } from "@elastic/elasticsearch";
 export interface BunyanESStreamOptions {

@@ -9,7 +9,6 @@ const elasticsearch_1 = require("@elastic/elasticsearch");
 class BunyanESStream extends stream_1.Writable {
     constructor(options) {
         super(Object.assign({ emitClose: true }, options));
-        this.closed = false;
         // We are going to collect logs in this property
         this.buffer = [];
         // Prepare some configurations
@@ -18,11 +17,7 @@ class BunyanESStream extends stream_1.Writable {
         this.interval = options.interval || 5000;
         this.clientOptions = options.clientOptions || {};
         this.client = options.client || new elasticsearch_1.Client(this.clientOptions);
-        this.client.info({}, (err) => {
-            if (err) {
-                this.emit("error", err);
-            }
-        });
+        this.client.info({}).catch(err => this.emit("error", err));
     }
     _write(chunk, _encoding, callback) {
         try {
@@ -90,21 +85,17 @@ class BunyanESStream extends stream_1.Writable {
             sum.push(JSON.stringify(value.body));
             return sum;
         }, []);
-        this.client.bulk({ body }, (err, resp) => {
-            if (resp && resp.body && resp.body.errors) {
-                for (const item of resp.body.items) {
+        this.client.bulk({ body }).then(resp => {
+            if (resp && resp.errors) {
+                for (const item of resp.items) {
                     if (item && item.create && item.create.error) {
                         this.emit("error", item.create.error);
                     }
                 }
             }
-            else if (err) {
-                this.emit("error", err);
-            }
-        });
+        }).catch(err => this.emit("error", err));
     }
     _final(callback) {
-        this.closed = true;
         this.flush();
         if (callback) {
             callback();

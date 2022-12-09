@@ -26,7 +26,6 @@ export default class BunyanESStream extends Writable {
       ...options,
     });
 
-    this.closed = false;
     // We are going to collect logs in this property
     this.buffer = [];
 
@@ -37,11 +36,7 @@ export default class BunyanESStream extends Writable {
     this.clientOptions = options.clientOptions || {};
     this.client = options.client || new Client(this.clientOptions);
 
-    this.client.info({}, (err) => {
-      if (err) {
-        this.emit("error", err);
-      }
-    });
+    this.client.info({}).catch(err => this.emit("error", err));
   }
 
   _write(
@@ -133,22 +128,22 @@ export default class BunyanESStream extends Writable {
       return sum;
     }, []);
 
-    this.client.bulk({ body }, (err, resp) => {
-      if (resp && resp.body && resp.body.errors) {
-        for (const item of resp.body.items) {
+    this.client.bulk({ body }).then(resp => {
+      if (resp && resp.errors) {
+        for (const item of resp.items) {
           if (item && item.create && item.create.error) {
             this.emit("error", item.create.error);
           }
         }
-      } else if (err) {
-        this.emit("error", err);
       }
-    });
+    }).catch(err => this.emit("error", err));
   }
 
   _final(callback: () => void) {
-    this.closed = true;
     this.flush();
+    if (this.intervalId) {
+      clearTimeout(this.intervalId);
+    }
     if (callback) {
       callback();
     }
