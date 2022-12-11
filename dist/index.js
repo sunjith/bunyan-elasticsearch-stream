@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.BunyanESStream = void 0;
 const stream_1 = require("stream");
 const bunyan_1 = __importDefault(require("bunyan"));
 const elasticsearch_1 = require("@elastic/elasticsearch");
@@ -105,4 +106,4 @@ class BunyanESStream extends stream_1.Writable {
         }
     }
 }
-exports.default = BunyanESStream;
+exports.BunyanESStream = BunyanESStream;

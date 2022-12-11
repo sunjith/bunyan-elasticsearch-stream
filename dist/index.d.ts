@@ -10,7 +10,7 @@ export interface BunyanESStreamOptions {
     clientOptions?: ClientOptions;
     client?: Client;
 }
-export default class BunyanESStream extends Writable {
+export declare class BunyanESStream extends Writable {
     closed: boolean;
     intervalId?: NodeJS.Timeout;
     buffer: any[];
