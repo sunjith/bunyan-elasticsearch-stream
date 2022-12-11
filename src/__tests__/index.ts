@@ -1,5 +1,5 @@
 import bunyan from "bunyan";
-import BunyanESStream from "../";
+import { BunyanESStream } from "../";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

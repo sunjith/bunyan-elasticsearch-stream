@@ -21,7 +21,7 @@ Based on [bunyan-elasticsearch-bulk](https://github.com/Milad/bunyan-elasticsear
 
 ```typescript
 import bunyan from "bunyan";
-import BunyanESStream from "bunyan-elasticsearch-stream";
+import { BunyanESStream } from "bunyan-elasticsearch-stream";
 
 const config = {
   name: 'Application Name',
